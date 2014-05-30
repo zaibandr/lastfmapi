@@ -1,6 +1,5 @@
 import unittest
-import lastfmapi
-
+import SlitheringFM
 
 SAMPLE_API_KEY = '1b21ef07e3ef3a12197c1d7b7b41b227'
 
@@ -17,16 +16,16 @@ class SuperTestCase(unittest.TestCase):
 class TestApi(SuperTestCase):
 
     def _test_api(self):
-        api = lastfmapi.LastFmApi(SAMPLE_API_KEY)
+        api = SlitheringFM.LastFmApi(SAMPLE_API_KEY)
         data = api.album_getinfo(artist='Cher', album='Believe')
         self.assertEqual(
             data['album']['mbid'],
             '86b5434d-9479-35e3-98ca-8fbcfcf4e357')
 
     def _test_api_invalid(self):
-        api = lastfmapi.LastFmApi(SAMPLE_API_KEY)
+        api = SlitheringFM.LastFmApi(SAMPLE_API_KEY)
         self.assertRaisesWithMessage(
-            lastfmapi.LastFmApiException,
+            SlitheringFM.LastFmApiException,
             'You must supply either an album & artist name or an album mbid.',
             api.album_getinfo)
 
@@ -35,7 +34,7 @@ class TestApiAlbumMethods(SuperTestCase):
     '''Tests to make sure all unauthenticated album methods work.'''
 
     def setUp(self):
-        self.api = lastfmapi.LastFmApi(SAMPLE_API_KEY)
+        self.api = SlitheringFM.LastFmApi(SAMPLE_API_KEY)
         self.kwargs = {
             'artist': 'cher',
             'album': 'believe',
@@ -67,7 +66,7 @@ class TestApiArtistMethods(SuperTestCase):
     '''Tests to make sure all unauthenticated artist methods work.'''
 
     def setUp(self):
-        self.api = lastfmapi.LastFmApi(SAMPLE_API_KEY)
+        self.api = SlitheringFM.LastFmApi(SAMPLE_API_KEY)
         self.kwargs = {
             'artist': 'cher',
         }
@@ -129,7 +128,7 @@ class TestApiTrackMethods(SuperTestCase):
     '''Tests to make sure all unauthenticated track methods work.'''
 
     def setUp(self):
-        self.api = lastfmapi.LastFmApi(SAMPLE_API_KEY)
+        self.api = SlitheringFM.LastFmApi(SAMPLE_API_KEY)
         self.kwargs = {
             'artist': 'radiohead',
             'track': 'creep',

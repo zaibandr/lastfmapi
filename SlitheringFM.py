@@ -5,7 +5,7 @@ import requests
 
 
 LASTFM_API_ENDPOINT = 'http://ws.audioscrobbler.com/2.0/'
-USER_AGENT = "lasfmapi-fork-malcolmlc"
+USER_AGENT = "SlitheringFM"
 
 
 class LastFmApiException(Exception):
