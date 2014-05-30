@@ -1,9 +1,12 @@
 import json
-import urllib
-import urllib2
+import requests
+
+
 
 
 LASTFM_API_ENDPOINT = 'http://ws.audioscrobbler.com/2.0/'
+USER_AGENT = "lasfmapi-fork-malcolmlc"
+
 
 class LastFmApiException(Exception):
     '''A blank exception specific to LastFmApi.'''
@@ -36,15 +39,15 @@ class LastFmApi(object):
         params['api_key'] = self.__api_key
         params['format'] = 'json'
 
-        headers = {
-            'User-Agent:': 'lastfmapi',
-        }
+        headers = {'User-Agent:': USER_AGENT}
 
-        params = urllib.urlencode(params)
-        request = urllib2.Request(LASTFM_API_ENDPOINT, params, headers)
-        response = urllib2.urlopen(request).read()
+        request = requests.get(LASTFM_API_ENDPOINT,params=params)
+        request.headers = headers
+
+        response = request.text
 
         s = json.loads(response)
-        if s.has_key('error'):
+
+        if 'error' in s:
             raise LastFmApiException(s['message'])
         return s
