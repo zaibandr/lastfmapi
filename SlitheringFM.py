@@ -28,7 +28,10 @@ class LastFmApi(object):
             raise AttributeError()
 
         def generic_request(*args, **kwargs):
-            params = dict(kwargs)
+            if 'data' in kwargs:
+                params = kwargs['data']
+            else:
+                params = dict(kwargs)
             params['method'] = name.replace('_', '.')
             return self.__send(params)
 
@@ -41,7 +44,7 @@ class LastFmApi(object):
 
         headers = {'User-Agent:': USER_AGENT}
 
-        request = requests.get(LASTFM_API_ENDPOINT,params=params)
+        request = requests.get(LASTFM_API_ENDPOINT, params=params)
         request.headers = headers
 
         response = request.text
